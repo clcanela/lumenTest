@@ -1,8 +1,10 @@
 # Prueba de Desarrollo PHP
-##### Servicio REST y Cliente web responsivo
+
+## Servicio REST y Cliente web responsivo
 Este es un ejemplo de la creacion de un servicio REST utilizando como base el framework Lumen, 
 el cual es un sub-set de Laravel
-##Instalación
+
+## Instalación
 Es necesario cargar la base de datos y crear un usuario/contraseña con privilegios de lectura/escritura.
 El archivo SQL **base.sql** se encuentra en la raiz del repositorio.
 
@@ -23,18 +25,23 @@ Información mas detallada sobre la instalación de proyectos laravel se puede e
  De igual forma, la interface utilza un mapa de Google con una llave configurada para correr desde localhost únicamente, si se requiere modificar la llave por una con otros privilegios se debe actualizar el API_KEY en el archivo _resources/views/index.blade.php_ al final del éste se encuentra la llamada al SDK de google maps, reemplazar aquí el valor de **key=** en la URL
  
  Una vez instalado el proyecto, al navegar en la web a la raíz del mismo, se debe mostrar la interface gráfica del proyecto 
- ##Servicio
+ 
+ ## Servicio
  Los distintos endpoints del servicio son:
- ###[GET] carburantes/update
+ 
+ ### [GET] carburantes/update
  Se encarga de consultar el servicio web de sedeaplicaciones.minetur.gob.es y actualizar la información tanto de precios como de las entidades (Provincia, Municipio). Ya que no se utilizó un servicio o base separados para obtener la información postal se recorre toda 
  la información devuelta por el servicio y se generan los registros únicos de cada localidad y los precios de cada estación
- ###[POST] carburantes/estaciones/{ord}
+ 
+ ### [POST] carburantes/estaciones/{ord}
  Lista todas las estaciones en la base de datos, como parámetro opcional puede recibir un ordenamiento por precios de los combustibles, el valor de este parámetro es [ASC|DESC]
  - parámetro [POST] **provincia** recibe un ID de una provincia, si se recibe se listan todas las estaciones de esa provincia
  - parámetro [POST] **municipio** recibe un ID de un municipio, si se recibe se listan todas las estaciones de este municipio. Si se reciben tanto **provincia** como **municipio**, municipio simpre tendrá prioridad, al ser un subconjunto de provincia.
- ###[GET] entidades/provincias
+ 
+ ### [GET] entidades/provincias
  Lista todas las provincias con su ID
- ###[GET] entidades/municipios/{pid}
+ 
+ ### [GET] entidades/municipios/{pid}
  Lista todos los municipios con su ID, limitados por el parámetro {pid} el cual es obligatorio y recibe el ID de una provincia
  
  ###Notas
