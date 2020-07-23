@@ -20,7 +20,7 @@ $(function () {
  */
 function fetchProvicnas() {
     $.ajax({
-        url: 'http://localhost:8000/api/entidades/provincias',
+        url: 'api/entidades/provincias',
         type: 'GET',
         dataType: 'json',
         success: function (data) {
@@ -55,7 +55,7 @@ function initProvinciasSelect() {
  */
 function loadMunicipios(pid) {
     $.ajax({
-        url: 'http://localhost:8000/api/entidades/municipios/' + pid,
+        url: 'api/entidades/municipios/' + pid,
         success: function (data) {
             $("form[name='filtros'] select[name='municipio'] option:gt(0)").remove();
             for (m in data) {
@@ -75,7 +75,7 @@ function initFilters() {
         ev.preventDefault();
         let orden = (typeof $("form[name='filtros'] input[name='order']:checked").val() != "undefined" ? $("form[name='filtros'] input[name='order']:checked").val() : '');
         $.ajax({
-            url: 'http://localhost:8000/api/carburantes/estaciones/' + orden,
+            url: 'api/carburantes/estaciones/' + orden,
             type: 'POST',
             dataType: 'json',
             data: $("form[name='filtros']").serialize(),
