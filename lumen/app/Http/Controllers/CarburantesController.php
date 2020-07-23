@@ -144,7 +144,16 @@ class CarburantesController extends Controller
             //metodo hydrate para devolver instancias a partir de los resultados de la consulta raw anterior
             return response()->json(['success'=>true,'results'=>Estacion::hydrate($estacionesData)]);
         }
-        $municipio = $request->post('municipio');
+        //si no recibi provincia ni municipio, devuelvo todas las estaciones
+        if (empty($request->post('provincia')) && empty($request->post('municipio'))) {
+            //sentencia para ordenamiento, como no todos los precios existen, ordenamos por todos segun lo solicitado, si no se solicito un ordenamiento $ordqry es vacio tambien
+            $ordqry = (empty($ord) ? '' : ' ORDER BY precio_gasoleo_A '.$ord.', precio_gasoleo_B '.$ord.', precio_gasolina_E10 '.$ord.', precio_gasolina_E5 '.$ord.', precio_gasoleo_maritimo ' . $ord);
+            //se usa DB::select en lugar de Estacion::where para permitir la ejecucion de un raw query que contempla el JOIN entre ambas tablas via el id_municipio para llegar desde id_provincia
+            $estacionesData = DB::select('SELECT es.* FROM estaciones es LEFT JOIN entidades en ON en.id_municipio=es.id_municipio ' . $ordqry, []);
+            //metodo hydrate para devolver instancias a partir de los resultados de la consulta raw anterior
+            return response()->json(['success'=>true,'results'=>Estacion::hydrate($estacionesData)]);
+        }
+
     }
 
     /**

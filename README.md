@@ -1,7 +1,7 @@
 # Prueba de Desarrollo PHP
 
 ## Servicio REST y Cliente web responsivo
-Este es un ejemplo de la creacion de un servicio REST utilizando como base el framework Lumen, 
+Este es un ejemplo de la creación de un servicio REST utilizando como base el framework Lumen, 
 el cual es un sub-set de Laravel
 
 ## Instalación
@@ -20,7 +20,7 @@ el comando `composer install`
 
 Información mas detallada sobre la instalación de proyectos laravel se puede encontrar en la [documentación oficial de Laravel](https://laravel.com/docs/7.x/deployment)
  
- Es necesario cargar la información de la base de datos en en archivo .env antes mencionado y revisar que funcionen correctamente los servicios definidos más adelante
+ Es necesario cargar la información de conexión a la base de datos en el archivo .env antes mencionado y revisar que funcionen correctamente los servicios definidos más adelante
  
  De igual forma, la interface utilza un mapa de Google con una llave configurada para correr desde localhost únicamente, si se requiere modificar la llave por una con otros privilegios se debe actualizar el API_KEY en el archivo _resources/views/index.blade.php_ al final del éste se encuentra la llamada al SDK de google maps, reemplazar aquí el valor de **key=** en la URL
  
@@ -29,19 +29,22 @@ Información mas detallada sobre la instalación de proyectos laravel se puede e
  ## Servicio
  Los distintos endpoints del servicio son:
  
- ### [GET] carburantes/update
- Se encarga de consultar el servicio web de sedeaplicaciones.minetur.gob.es y actualizar la información tanto de precios como de las entidades (Provincia, Municipio). Ya que no se utilizó un servicio o base separados para obtener la información postal se recorre toda 
- la información devuelta por el servicio y se generan los registros únicos de cada localidad y los precios de cada estación
+ ### [GET] api/carburantes/update
+ Se encarga de consultar el servicio web de _[sedeaplicaciones.minetur.gob.es]_ y actualizar la información tanto de precios como de las entidades (Provincia, Municipio). Ya que no se utilizó un servicio o base separados para obtener la información postal se recorre toda 
+ la información devuelta por el servicio y se generan los registros únicos de cada localidad, así como los precios e información de cada estación
  
- ### [POST] carburantes/estaciones/{ord}
- Lista todas las estaciones en la base de datos, como parámetro opcional puede recibir un ordenamiento por precios de los combustibles, el valor de este parámetro es [ASC|DESC]
+ ### [POST/GET] api/carburantes/estaciones/{ord}
+ Lista todas las estaciones en la base de datos.
  - parámetro [POST] **provincia** recibe un ID de una provincia, si se recibe se listan todas las estaciones de esa provincia
  - parámetro [POST] **municipio** recibe un ID de un municipio, si se recibe se listan todas las estaciones de este municipio. Si se reciben tanto **provincia** como **municipio**, municipio simpre tendrá prioridad, al ser un subconjunto de provincia.
+ - parámetro [URL] **ord** como parámetro opcional al final de la URL puede recibir un ordenamiento por precios de los combustibles, el valor de este parámetro es [ASC|DESC].
  
- ### [GET] entidades/provincias
+ Si no recibe parámetros en *POST*, devuelve todas las estaciones.
+ 
+ ### [GET] api/entidades/provincias
  Lista todas las provincias con su ID
  
- ### [GET] entidades/municipios/{pid}
+ ### [GET] api/entidades/municipios/{pid}
  Lista todos los municipios con su ID, limitados por el parámetro {pid} el cual es obligatorio y recibe el ID de una provincia
  
  ###Notas
@@ -49,7 +52,7 @@ Información mas detallada sobre la instalación de proyectos laravel se puede e
  
  No todas las estaciones tienen todos los precios de gasolina, por lo que el ordenamiento de precios es entre distintas columnas (en la interface se aprecia de la columna izquiera a derecha)
  
- La interface tiene implementado un spinner para todas las peticiones AJAX, al correr en local el tiempo de respuesta puder ser muy rápido
+ La interface tiene implementado un *spinner* para todas las peticiones AJAX, al correr en local el tiempo de respuesta puede ser muy rápido
  y es posible que se aprecie una especie de _destello_ negro en la pantalla, esto es normal ya que en realidad se coloca una cortinilla 
- oscura sobre la interface pero inmediatamente se retira al finalizar la petición AJAX que suele ser muy breve en local. Si se desea mirar la misma se puede emular una velocidad de conexión más lenta utilizando la opción de "throttling" en las herramientas de desarrollo
+ oscura sobre la interface para notificar al usuario sobre la actividad web, pero inmediatamente se retira al finalizar la petición AJAX que suele ser muy breve en local. Si se desea mirar la misma se puede emular una velocidad de conexión más lenta utilizando la opción de "throttling" en las herramientas de desarrollo
  del navegador
