@@ -47,7 +47,7 @@ Información mas detallada sobre la instalación de proyectos laravel se puede e
  ### [GET] api/entidades/municipios/{pid}
  Lista todos los municipios con su ID, limitados por el parámetro {pid} el cual es obligatorio y recibe el ID de una provincia
  
- ###Notas
+ ## Notas
  Algunas estaciones no cuentan con coordenadas, se agregan al listado pero no intenta generar un marcador en el mapa.
  
  No todas las estaciones tienen todos los precios de gasolina, por lo que el ordenamiento de precios es entre distintas columnas (en la interface se aprecia de la columna izquiera a derecha)
